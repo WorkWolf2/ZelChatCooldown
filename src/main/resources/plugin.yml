@@ -1,0 +1,8 @@
+name: ZelChatCooldown
+version: '${version}'
+
+main: com.minegolem.zelChatCooldown.ZelChatCooldown
+api-version: '1.20.6'
+load: POSTWORLD
+
+depend: [ZelChat]

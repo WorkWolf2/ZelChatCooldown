@@ -1,0 +1,24 @@
+# Config file for Cooldowns
+
+# Puoi impostare i permessi che vuoi per usare per i cooldowns; Il tempo è in secondi
+
+cooldowns:
+  permission.perm1: 30
+  permission.perm2: 15
+  permission.vip: 5
+
+messages:
+  cooldown: "<red>⏳ Devi aspettare ancora <yellow>%zelchatcooldown_remaining% <red>secondi!"
+
+settings:
+  actionbar: true
+
+prefixes:
+  - '[enderchest]'
+  - '[ec]'
+  - '[ender]'
+  - '[item]'
+  - '[i]'
+  - '[hand]'
+  - '[inv]'
+  - '[inventory]'
