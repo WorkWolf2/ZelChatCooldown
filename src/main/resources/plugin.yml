@@ -5,4 +5,16 @@ main: com.minegolem.zelChatCooldown.ZelChatCooldown
 api-version: '1.20.6'
 load: POSTWORLD
 
-depend: [ZelChat]
+depend: [ZelChat, PlaceholderAPI]
+
+
+commands:
+  zelchatcooldownreload:
+    description: Ricarica la configurazione di ZelChatCooldown
+    aliases: [zccreload, zcc-reload]
+    permission: zelchatcooldown.reload
+
+permissions:
+  zelchatcooldown.reload:
+    description: reload configs
+    default: op

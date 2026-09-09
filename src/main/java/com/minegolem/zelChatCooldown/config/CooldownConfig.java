@@ -1,10 +1,13 @@
 package com.minegolem.zelChatCooldown.config;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.*;
 
@@ -16,7 +19,16 @@ public final class CooldownConfig {
     private final boolean actionbar;
 
     @Getter
+    private final Duration defaultCooldown;
+
+    @Getter
     private final List<String> prefixes;
+
+    @Getter
+    private final boolean debug;
+
+    @Getter
+    private final String bypassPermission;
 
     public CooldownConfig(FileConfiguration config) {
         Map<String, Duration> loaded = new HashMap<>();
@@ -52,15 +64,45 @@ public final class CooldownConfig {
                 true
         );
 
-        this.prefixes = config.getStringList("prefixes");
+        this.debug = config.getBoolean("debug", false);
+
+        this.defaultCooldown = config.contains("settings.default-cooldown")
+                ? Duration.ofSeconds(config.getLong("settings.default-cooldown"))
+                : null;
+
+        this.bypassPermission = config.getString(
+                "settings.bypass-permission",
+                "zelchatcooldown.bypass"
+        );
+
+        File configFile = new File(Bukkit.getPluginsFolder(), "ZelChat/settings.yml");
+
+        YamlConfiguration zelChatSettings = YamlConfiguration.loadConfiguration(configFile);
+
+        List<String> prefixes = new ArrayList<>();
+        prefixes.add(zelChatSettings.getString("Features.inventory-show.parser"));
+        prefixes.add(zelChatSettings.getString("Features.item-show.parser"));
+        prefixes.add(zelChatSettings.getString("Features.enderchest-show.parser"));
+
+        this.prefixes = prefixes;
+    }
+
+    public boolean hasBypass(Player player) {
+        return player.hasPermission(bypassPermission);
     }
 
     public Optional<Duration> getCooldown(Player player) {
-        return cooldowns.entrySet()
+        Optional<Duration> matched = cooldowns.entrySet()
                 .stream()
                 .filter(entry -> player.hasPermission(entry.getKey()))
                 .map(Map.Entry::getValue)
                 .min(Comparator.naturalOrder());
+
+        if (matched.isPresent()) {
+            return matched;
+        }
+
+        return Optional.ofNullable(defaultCooldown);
     }
 
     public boolean isActionbarEnabled() {

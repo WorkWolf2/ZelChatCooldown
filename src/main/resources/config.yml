@@ -1,7 +1,8 @@
 # Config file for Cooldowns
 
-# Puoi impostare i permessi che vuoi per usare per i cooldowns; Il tempo è in secondi
+debug: false
 
+# Puoi impostare i permessi che vuoi per usare per i cooldowns; Il tempo è in secondi
 cooldowns:
   permission.perm1: 30
   permission.perm2: 15
@@ -12,13 +13,7 @@ messages:
 
 settings:
   actionbar: true
-
-prefixes:
-  - '[enderchest]'
-  - '[ec]'
-  - '[ender]'
-  - '[item]'
-  - '[i]'
-  - '[hand]'
-  - '[inv]'
-  - '[inventory]'
+  # Cooldown (in secondi) applicato a chi NON ha nessuno dei permessi sopra.
+  # Rimuovi/commenta questa riga se vuoi che chi non ha permessi resti esente (comportamento attuale).
+  default-cooldown: 20
+  bypass-permission: "zelchatcooldown.bypass"
