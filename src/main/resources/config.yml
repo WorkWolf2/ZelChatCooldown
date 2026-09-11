@@ -17,3 +17,6 @@ settings:
   # Rimuovi/commenta questa riga se vuoi che chi non ha permessi resti esente (comportamento attuale).
   default-cooldown: 20
   bypass-permission: "zelchatcooldown.bypass"
+
+  enable-sound: true
+  sound: ENTITY_PLAYER_LEVELUP

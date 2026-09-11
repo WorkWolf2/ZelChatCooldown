@@ -1,7 +1,10 @@
 package com.minegolem.zelChatCooldown.config;
 
 import lombok.Getter;
+import net.kyori.adventure.key.Key;
 import org.bukkit.Bukkit;
+import org.bukkit.Registry;
+import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -29,6 +32,11 @@ public final class CooldownConfig {
 
     @Getter
     private final String bypassPermission;
+
+    @Getter
+    private final boolean soundConfirm;
+    @Getter
+    private final Sound sound;
 
     public CooldownConfig(FileConfiguration config) {
         Map<String, Duration> loaded = new HashMap<>();
@@ -85,6 +93,11 @@ public final class CooldownConfig {
         prefixes.add(zelChatSettings.getString("Features.enderchest-show.parser"));
 
         this.prefixes = prefixes;
+
+        this.soundConfirm = config.getBoolean("settings.enable-sound", true);
+
+        String entityPlayerLevelup = config.getString("settings.sound", "ENTITY_PLAYER_LEVELUP");
+        this.sound = Registry.SOUNDS.get(Key.key(entityPlayerLevelup.toLowerCase(Locale.ROOT)));
     }
 
     public boolean hasBypass(Player player) {
@@ -107,5 +120,9 @@ public final class CooldownConfig {
 
     public boolean isActionbarEnabled() {
         return actionbar;
+    }
+
+    public boolean isSoundEnabled() {
+        return soundConfirm;
     }
 }

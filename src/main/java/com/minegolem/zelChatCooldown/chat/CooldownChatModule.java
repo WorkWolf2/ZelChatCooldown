@@ -113,6 +113,11 @@ public class CooldownChatModule implements ChatModule {
             plugin.debug("Sending cooldown message to chat of " + player.getName() + ".");
             player.sendMessage(component);
         }
+
+        if (plugin.getCooldownConfig().isSoundEnabled()) {
+            assert plugin.getCooldownConfig().getSound() != null;
+            player.playSound(player.getLocation(), plugin.getCooldownConfig().getSound(), 1, 1);
+        }
     }
 
     private String resolvePrefix(Player player, String prefix) {
